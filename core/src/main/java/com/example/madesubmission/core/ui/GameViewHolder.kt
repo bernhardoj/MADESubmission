@@ -20,7 +20,7 @@ class GameViewHolder(itemView: View, private val listener: (Game) -> Unit) : Rec
                 .into(gameImage)
             gameTitle.text = game.name
             rating.text = game.rating.toString()
-            platformName.text = game.platforms
+            genres.text = game.genres
         }
         itemView.setOnClickListener {
             listener(game)

@@ -19,9 +19,9 @@ object DataMapper {
                 it.name,
                 it.imageUrl,
                 it.rating,
-                if (it.platforms == null || it.platforms.isEmpty()) UNKNOWN
-                else it.platforms.joinToString(" | ") { platform ->
-                    platform.platformName.name
+                if (it.genres == null || it.genres.isEmpty()) UNKNOWN
+                else it.genres.joinToString(", ") { genre ->
+                    genre.name
                 },
                 DayUtil.getCurrentDay(),
                 false,
@@ -34,10 +34,6 @@ object DataMapper {
             response.id,
             response.description,
             response.releaseDate ?: UNKNOWN,
-            if (response.genres == null || response.genres.isEmpty()) UNKNOWN
-            else response.genres.joinToString(separator = ", ") {
-                it.name
-            },
             if (response.platforms == null || response.platforms.isEmpty()) UNKNOWN
             else response.platforms.joinToString(separator = ", ") {
                 it.platformName.name
@@ -61,7 +57,7 @@ object DataMapper {
             it.name,
             it.imageUrl,
             it.rating,
-            it.platforms,
+            it.genres,
             it.updated,
             it.isFavorite,
             it.platformId
@@ -73,7 +69,7 @@ object DataMapper {
         gameEntity.name,
         gameEntity.imageUrl,
         gameEntity.rating,
-        gameEntity.platforms,
+        gameEntity.genres,
         gameEntity.updated,
         gameEntity.isFavorite,
         gameEntity.platformId
@@ -85,7 +81,6 @@ object DataMapper {
             gameDetailEntities?.id ?: -1,
             gameDetailEntities?.description ?: UNKNOWN,
             gameDetailEntities?.releaseDate ?: UNKNOWN,
-            gameDetailEntities?.genres ?: UNKNOWN,
             gameDetailEntities?.platforms ?: UNKNOWN,
             gameDetailEntities?.developers ?: UNKNOWN,
             gameDetailEntities?.publishers ?: UNKNOWN,
@@ -104,7 +99,7 @@ object DataMapper {
             game.name,
             game.imageUrl,
             game.rating,
-            game.platforms,
+            game.genres,
             game.updated,
             true,
             game.platformId

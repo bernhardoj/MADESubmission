@@ -4,7 +4,6 @@ data class GameDetail(
     val id: Int,
     val description: String,
     val releaseDate: String,
-    val genres: String,
     val platforms: String,
     val developers: String,
     val publishers: String,

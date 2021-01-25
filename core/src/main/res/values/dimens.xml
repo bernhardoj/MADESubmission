@@ -2,4 +2,5 @@
 <resources>
     <dimen name="big">16dp</dimen>
     <dimen name="small">8dp</dimen>
+    <dimen name="xsmall">4dp</dimen>
 </resources>

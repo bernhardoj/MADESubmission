@@ -16,10 +16,8 @@ import com.example.madesubmission.core.data.Resource
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.model.GameDetail
 import com.example.madesubmission.databinding.ActivityDetailBinding
-import com.google.android.material.appbar.AppBarLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import kotlin.math.abs
 
 class DetailActivity : AppCompatActivity() {
     companion object {
@@ -60,23 +58,6 @@ class DetailActivity : AppCompatActivity() {
             adapter = screenshotAdapter
         }
 
-        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-            when (abs(verticalOffset)) {
-                binding.appBar.totalScrollRange -> {
-                    favoriteMenuItem?.isVisible = true
-                    supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
-                }
-                0 -> {
-                    favoriteMenuItem?.isVisible = false
-                    supportActionBar?.setHomeAsUpIndicator(R.drawable.back_bubble)
-                }
-                else -> {
-                    favoriteMenuItem?.isVisible = false
-                    supportActionBar?.setHomeAsUpIndicator(R.drawable.back_bubble)
-                }
-            }
-        })
-
         detailViewModel.gameDetailLiveData.observe(this, { gameDetail ->
             when (gameDetail) {
                 is Resource.Success -> {
@@ -108,10 +89,6 @@ class DetailActivity : AppCompatActivity() {
 
         binding.retryButton.setOnClickListener {
             detailViewModel.loadDetail()
-        }
-
-        binding.fab.setOnClickListener {
-            setFavorite()
         }
     }
 
@@ -148,7 +125,7 @@ class DetailActivity : AppCompatActivity() {
                     .toString()
             gameReleased.text = gameDetail.releaseDate
             gameDevelopers.text = gameDetail.developers
-            gameGenres.text = gameDetail.genres
+            gameGenres.text = game.genres
             gamePlatforms.text = gameDetail.platforms
             gamePublishers.text = gameDetail.publishers
             rating.text = game.rating.toString()
@@ -160,21 +137,9 @@ class DetailActivity : AppCompatActivity() {
     private fun changeIcon() {
         when (isFavorite) {
             true -> {
-                binding.fab.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_baseline_favorite_24
-                    )
-                )
                 favoriteMenuItem?.setIcon(R.drawable.ic_baseline_favorite_24)
             }
             false -> {
-                binding.fab.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_baseline_favorite_border_24
-                    )
-                )
                 favoriteMenuItem?.setIcon(R.drawable.ic_baseline_favorite_border_24)
             }
         }

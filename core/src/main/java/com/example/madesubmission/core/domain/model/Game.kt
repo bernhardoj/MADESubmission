@@ -9,7 +9,7 @@ data class Game(
     val name: String,
     val imageUrl: String?,
     val rating: Double,
-    val platforms: String,
+    val genres: String,
     val updated: Int,
     val isFavorite: Boolean,
     val platformId: String

@@ -5,6 +5,8 @@ import com.example.madesubmission.core.data.Resource
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.usecase.GameUseCase
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.launch
 
 class ExploreListViewModel(private val platform: String, private val gameUseCase: GameUseCase) :

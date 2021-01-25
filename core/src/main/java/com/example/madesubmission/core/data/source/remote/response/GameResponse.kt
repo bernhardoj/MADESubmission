@@ -15,6 +15,6 @@ data class GameResponse(
     @field:SerializedName("rating")
     val rating: Double,
 
-    @field:SerializedName("parent_platforms")
-    val platforms: List<PlatformResponse>?
+    @field:SerializedName("genres")
+    val genres: List<GenreResponse>?
 )

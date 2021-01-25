@@ -10,6 +10,7 @@ class GameAdapter(private val listener: (Game) -> Unit) : RecyclerView.Adapter<G
     private val gameList = ArrayList<Game>()
 
     fun setGameList(gameList: List<Game>) {
+        this.gameList.clear()
         this.gameList.addAll(gameList)
         notifyDataSetChanged()
     }

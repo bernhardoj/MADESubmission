@@ -13,10 +13,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="@dimen/big">
+        android:layout_height="match_parent">
 
         <TextView
+            android:textAlignment="center"
             android:id="@+id/game_title"
             style="@style/TextAppearance.AppCompat.Display1"
             android:layout_width="0dp"
@@ -25,203 +25,206 @@
             android:padding="@dimen/big"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/rating"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Seal Online " />
 
         <TextView
-            android:id="@+id/rating"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/big"
-            android:layout_marginEnd="@dimen/big"
-            android:background="@drawable/rounded_corners"
-            android:padding="@dimen/small"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="5.0" />
-
-        <TextView
             android:id="@+id/about_heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            android:gravity="end"
-            android:paddingStart="@dimen/big"
-            android:paddingTop="@dimen/small"
-            android:paddingEnd="@dimen/big"
-            android:paddingBottom="@dimen/small"
+            android:layout_marginStart="@dimen/big"
             android:text="@string/about"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_title" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/big"
+        <TextView
+            android:id="@+id/game_desc"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/big"
+            android:layout_marginTop="@dimen/small"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about_heading">
+            app:layout_constraintTop_toBottomOf="@id/about_heading"
+            tools:text="SUPPORTED DEVICES iOS 5.1.1 or later is required. Square Enix’s fresh-faced hit The New York Times called “one of the best role playing games ever designed for anything” has busted onto iOS in a big way, with a slick and addictive new combat system, eye-popping HD art, and (of course) plenty of zetta " />
 
-            <TextView
-                android:id="@+id/game_desc"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="SUPPORTED DEVICES iOS 5.1.1 or later is required. Square Enix’s fresh-faced hit The New York Times called “one of the best role playing games ever designed for anything” has busted onto iOS in a big way, with a slick and addictive new combat system, eye-popping HD art, and (of course) plenty of zetta " />
+        <TextView
+            android:id="@+id/release_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small"
+            android:layout_marginEnd="@dimen/small"
+            android:text="@string/release_date"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/game_desc"
+            app:layout_constraintTop_toBottomOf="@+id/game_desc" />
 
-            <TextView
-                android:id="@+id/release_heading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small"
-                android:layout_marginEnd="@dimen/small"
-                android:text="@string/release_date"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/game_desc" />
+        <TextView
+            android:id="@+id/game_released"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/release_heading"
+            app:layout_constraintTop_toBottomOf="@+id/release_heading"
+            tools:text="December 12, 2019" />
 
-            <TextView
-                android:id="@+id/game_released"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/small"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/release_heading"
-                app:layout_constraintTop_toBottomOf="@+id/release_heading"
-                tools:text="December 12, 2019" />
+        <TextView
+            android:id="@+id/rating_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small"
+            android:layout_marginTop="8dp"
+            android:text="@string/rating_heading"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/game_desc"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/game_desc" />
 
-            <TextView
-                android:id="@+id/genre_heading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small"
-                android:layout_marginTop="8dp"
-                android:text="@string/genre"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/game_desc" />
+        <TextView
+            android:id="@+id/rating"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/rating_heading"
+            app:layout_constraintTop_toBottomOf="@+id/rating_heading"
+            tools:text="5.0" />
 
-            <TextView
-                android:id="@+id/game_genres"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/genre_heading"
-                app:layout_constraintTop_toBottomOf="@+id/genre_heading"
-                tools:text="Horror, Comedy" />
+        <TextView
+            android:id="@+id/platform_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small"
+            android:text="@string/platforms"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/release_heading"
+            app:layout_constraintTop_toBottomOf="@+id/rating" />
 
-            <TextView
-                android:id="@+id/platform_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/platforms"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/game_genres" />
+        <TextView
+            android:id="@+id/game_platforms"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/platform_heading"
+            app:layout_constraintTop_toBottomOf="@+id/platform_heading"
+            tools:text="PC, Xbox One, Nintento Switch" />
 
-            <TextView
-                android:id="@+id/game_platforms"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/platform_heading"
-                app:layout_constraintTop_toBottomOf="@+id/platform_heading"
-                tools:text="PC, Xbox One, Nintento Switch" />
+        <TextView
+            android:id="@+id/genre_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small"
+            android:layout_marginTop="@dimen/small"
+            android:text="@string/genre"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/game_desc"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/rating" />
 
-            <TextView
-                android:id="@+id/developer_heading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small"
-                android:layout_marginEnd="@dimen/small"
-                android:text="@string/developers"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/game_platforms" />
+        <TextView
+            android:id="@+id/game_genres"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/game_desc"
+            app:layout_constraintStart_toStartOf="@+id/genre_heading"
+            app:layout_constraintTop_toBottomOf="@+id/genre_heading"
+            tools:text="Horror, Comedy" />
 
-            <TextView
-                android:id="@+id/game_developers"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/small"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/developer_heading"
-                app:layout_constraintTop_toBottomOf="@+id/developer_heading"
-                tools:text="Square Enix" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="game_platforms,game_genres" />
 
-            <TextView
-                android:id="@+id/publisher_heading"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small"
-                android:text="@string/publishers"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/genre_heading"
-                app:layout_constraintTop_toBottomOf="@+id/game_platforms" />
+        <TextView
+            android:id="@+id/developer_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small"
+            android:layout_marginEnd="@dimen/small"
+            android:text="@string/developers"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/platform_heading"
+            app:layout_constraintTop_toBottomOf="@+id/barrier" />
 
-            <TextView
-                android:id="@+id/game_publishers"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/publisher_heading"
-                app:layout_constraintTop_toBottomOf="@+id/publisher_heading"
-                tools:text="EA" />
+        <TextView
+            android:id="@+id/game_developers"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/developer_heading"
+            app:layout_constraintTop_toBottomOf="@+id/developer_heading"
+            tools:text="Square Enix" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/publisher_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small"
+            android:text="@string/publishers"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/game_desc"
+            app:layout_constraintStart_toStartOf="@+id/genre_heading"
+            app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+        <TextView
+            android:id="@+id/game_publishers"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/game_desc"
+            app:layout_constraintStart_toStartOf="@+id/publisher_heading"
+            app:layout_constraintTop_toBottomOf="@+id/publisher_heading"
+            tools:text="EA" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="game_developers,game_publishers" />
 
         <TextView
             android:id="@+id/screenshot_heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            android:gravity="end"
-            android:paddingStart="@dimen/big"
-            android:paddingTop="@dimen/small"
-            android:paddingEnd="@dimen/big"
-            android:paddingBottom="@dimen/small"
+            android:layout_marginStart="@dimen/big"
+            android:layout_marginTop="@dimen/big"
             android:text="@string/screenshots"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            app:layout_constraintTop_toBottomOf="@id/barrier_2" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/screenshot_rv"
@@ -246,12 +249,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/screenshot_heading" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.42" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

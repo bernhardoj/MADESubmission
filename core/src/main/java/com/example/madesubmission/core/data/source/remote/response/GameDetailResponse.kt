@@ -12,9 +12,6 @@ data class GameDetailResponse(
     @field:SerializedName("released")
     val releaseDate: String?,
 
-    @field:SerializedName("genres")
-    val genres: List<GenreResponse>?,
-
     @field:SerializedName("platforms")
     val platforms: List<PlatformResponse>?,
 

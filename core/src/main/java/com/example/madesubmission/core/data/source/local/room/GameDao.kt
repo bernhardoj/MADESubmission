@@ -7,6 +7,7 @@ import com.example.madesubmission.core.data.source.local.entity.GameEntity
 import com.example.madesubmission.core.data.source.local.entity.GameUpdateEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import java.lang.Exception
 
 @Dao
@@ -18,7 +19,7 @@ interface GameDao {
     fun getGameDetail(id: Int): Flow<GameDetailEntity>
 
     @Query(
-        "SELECT games.id, games.imageUrl, games.name, games.platforms, games.rating, games.updated, games.isFavorite, games.platformId "
+        "SELECT games.id, games.imageUrl, games.name, games.genres, games.rating, games.updated, games.isFavorite, games.platformId "
                 + "from games INNER JOIN game_detail ON games.id=game_detail.id WHERE game_detail.isFavorite=1"
     )
     fun getFavorites(): PagingSource<Int, GameEntity>
@@ -43,9 +44,9 @@ interface GameDao {
 
     suspend fun insertOrUpdate(gameEntities: List<GameEntity>) {
         for (gameEntity in gameEntities) {
-            try {
-                // Get existed game record if any
-                val game = getGame(gameEntity.id).first()
+            // Get existed game record if any
+            val game = getGame(gameEntity.id).firstOrNull()
+            game?.let {
                 var currentPlatformId = game.platformId
 
                 // If the existing game record does not contain the fetched
@@ -55,8 +56,6 @@ interface GameDao {
                 }
 
                 gameEntity.platformId = currentPlatformId
-            } catch (e: Exception) {
-                // Do nothing (data is new)
             }
         }
         insertGames(gameEntities)
