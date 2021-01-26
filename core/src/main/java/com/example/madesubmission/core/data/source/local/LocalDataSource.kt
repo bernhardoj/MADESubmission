@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import com.example.madesubmission.core.data.source.local.entity.GameDetailEntity
 import com.example.madesubmission.core.data.source.local.entity.GameEntity
 import com.example.madesubmission.core.data.source.local.entity.GameUpdateEntity
+import com.example.madesubmission.core.data.source.local.entity.RecentSearchEntity
 import com.example.madesubmission.core.data.source.local.room.GameDao
 import kotlinx.coroutines.flow.Flow
 
@@ -16,4 +17,7 @@ class LocalDataSource(private val gameDao: GameDao) {
     suspend fun insertGames(gameEntities: List<GameEntity>) = gameDao.insertOrUpdate(gameEntities)
     suspend fun insertGameDetail(gameDetailEntity: GameDetailEntity) = gameDao.insertGameDetail(gameDetailEntity)
     suspend fun deleteGame(gameEntity: GameEntity) = gameDao.deleteGame(gameEntity)
+    fun getRecentSearch() = gameDao.getRecentSearch()
+    suspend fun saveRecentSearch(recentSearchEntity: RecentSearchEntity) = gameDao.saveRecentSearch(recentSearchEntity)
+    fun clearRecentSearch() = gameDao.deleteRecentSearch()
 }

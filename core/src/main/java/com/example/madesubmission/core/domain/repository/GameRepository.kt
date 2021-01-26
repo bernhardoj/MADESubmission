@@ -10,6 +10,7 @@ import com.example.madesubmission.core.data.source.remote.response.GameDetailRes
 import com.example.madesubmission.core.data.source.remote.response.GameResponse
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.model.GameDetail
+import com.example.madesubmission.core.domain.model.RecentSearch
 import com.example.madesubmission.core.utils.DataMapper
 import com.example.madesubmission.core.utils.DayUtil
 import kotlinx.coroutines.flow.*
@@ -81,7 +82,12 @@ class GameRepository(
 
             override suspend fun saveCallResult(data: GameDetailResponse) {
                 val dbSource = loadFromDb().first()
-                localDataSource.insertGameDetail(DataMapper.responsesToEntities(data, dbSource.isFavorite))
+                localDataSource.insertGameDetail(
+                    DataMapper.responsesToEntities(
+                        data,
+                        dbSource.isFavorite
+                    )
+                )
             }
 
             override fun isExpired(data: GameDetail): Int {
@@ -105,11 +111,24 @@ class GameRepository(
         }
     }
 
-    override suspend fun insertGame(game: Game) = localDataSource.insertGame(DataMapper.domainToEntity(game))
+    override suspend fun insertGame(game: Game) =
+        localDataSource.insertGame(DataMapper.domainToEntity(game))
 
-    override suspend fun deleteGame(game: Game) = localDataSource.deleteGame(DataMapper.domainToEntity(game))
+    override suspend fun deleteGame(game: Game) =
+        localDataSource.deleteGame(DataMapper.domainToEntity(game))
 
-    override suspend fun updateFavoriteGame(gameDetail: GameUpdateEntity) {
+    override suspend fun updateFavoriteGame(gameDetail: GameUpdateEntity) =
         localDataSource.updateFavoriteGame(gameDetail)
-    }
+
+    override fun getRecentSearch(): Flow<List<RecentSearch>> =
+        localDataSource.getRecentSearch().map {
+            it.map { entity ->
+                DataMapper.entityToDomain(entity)
+            }
+        }
+
+    override suspend fun saveRecentSearch(recentSearch: RecentSearch) =
+        localDataSource.saveRecentSearch(DataMapper.domainToEntity(recentSearch))
+
+    override fun clearRecentSearch() = localDataSource.clearRecentSearch()
 }

@@ -7,7 +7,6 @@ import com.example.madesubmission.ui.explore.ExploreListViewModel
 import com.example.madesubmission.ui.search.SearchViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

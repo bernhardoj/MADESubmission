@@ -11,6 +11,7 @@
         android:layout_margin="@dimen/big"
         android:background="@drawable/search_border"
         android:iconifiedByDefault="false"
+        android:queryBackground="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,6 +26,26 @@
         android:text="@string/recent_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_game" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recent_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recent_search_heading" />
+
+    <TextView
+        android:id="@+id/no_recent_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_recent_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent_search_heading" />
 
     <include
         android:id="@+id/list"

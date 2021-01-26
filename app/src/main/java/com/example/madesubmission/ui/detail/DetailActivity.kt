@@ -16,8 +16,10 @@ import com.example.madesubmission.core.data.Resource
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.model.GameDetail
 import com.example.madesubmission.databinding.ActivityDetailBinding
+import com.google.android.material.appbar.AppBarLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import kotlin.math.abs
 
 class DetailActivity : AppCompatActivity() {
     companion object {
@@ -49,6 +51,14 @@ class DetailActivity : AppCompatActivity() {
                 android.R.color.transparent
             )
         )
+
+        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            when (abs(verticalOffset)) {
+                275 -> binding.toolbar.background = null
+                274 -> binding.toolbar.background =
+                    ContextCompat.getDrawable(this, R.drawable.gradient_overlay)
+            }
+        })
 
         val screenshotAdapter = ScreenshotAdapter()
         binding.content.screenshotRv.apply {
@@ -135,14 +145,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun changeIcon() {
-        when (isFavorite) {
-            true -> {
-                favoriteMenuItem?.setIcon(R.drawable.ic_baseline_favorite_24)
-            }
-            false -> {
-                favoriteMenuItem?.setIcon(R.drawable.ic_baseline_favorite_border_24)
-            }
-        }
+        favoriteMenuItem?.setIcon(
+            if (isFavorite) R.drawable.ic_baseline_favorite_24
+            else R.drawable.ic_baseline_favorite_border_24
+        )
     }
 
     private fun setFavorite() {

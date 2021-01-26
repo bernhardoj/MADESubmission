@@ -2,7 +2,6 @@ package com.example.madesubmission.ui.search
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.SearchRecentSuggestions
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import com.example.madesubmission.core.data.Resource
 import com.example.madesubmission.core.ui.GameAdapter
 import com.example.madesubmission.databinding.FragmentSearchBinding
 import com.example.madesubmission.ui.detail.DetailActivity
-import com.example.madesubmission.ui.search.provider.MySuggestionProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -40,6 +38,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.let { binding ->
+            binding.list.listLayout.visibility = View.GONE
             val gameAdapter = GameAdapter {
                 val intent = Intent(context, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.GAME_EXTRA, it)
@@ -49,6 +48,15 @@ class SearchFragment : Fragment() {
             binding.list.rvGames.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = gameAdapter
+            }
+
+            val recentSearchAdapter = RecentSearchAdapter {
+                binding.searchGame.setQuery(it, false)
+            }
+
+            binding.recentRv.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = recentSearchAdapter
             }
 
             binding.searchGame.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -61,6 +69,13 @@ class SearchFragment : Fragment() {
                     job = lifecycleScope.launch {
                         searchViewModel.queryChannel.send(newText.toString())
                     }
+
+                    if (newText.toString().isEmpty()) {
+                        binding.recentRv.visibility = View.VISIBLE
+                        binding.recentSearchHeading.visibility = View.VISIBLE
+                        binding.list.listLayout.visibility = View.GONE
+                    }
+
                     return true
                 }
             })
@@ -69,7 +84,10 @@ class SearchFragment : Fragment() {
                 with(binding.list) {
                     when (game) {
                         is Resource.Loading -> {
+                            listLayout.visibility = View.VISIBLE
                             binding.recentSearchHeading.visibility = View.GONE
+                            binding.recentRv.visibility = View.GONE
+                            binding.noRecentSearch.visibility = View.GONE
                             progressBar.visibility = View.VISIBLE
                             retryButton.visibility = View.GONE
                             errorTv.visibility = View.GONE
@@ -77,11 +95,7 @@ class SearchFragment : Fragment() {
                         }
                         is Resource.Success -> {
                             // Save recent query
-                            SearchRecentSuggestions(
-                                context,
-                                MySuggestionProvider.AUTHORITY,
-                                MySuggestionProvider.MODE
-                            ).saveRecentQuery(searchViewModel.queryChannel.value, null)
+                            searchViewModel.saveRecentSearch(searchViewModel.queryChannel.value)
 
                             progressBar.visibility = View.GONE
                             if (game.data.isEmpty()) {
@@ -102,6 +116,14 @@ class SearchFragment : Fragment() {
                             retryButton.visibility = View.VISIBLE
                         }
                     }
+                }
+            }
+
+            searchViewModel.recentSearchLiveData.observe(viewLifecycleOwner) {
+                if (it.isEmpty()) binding.noRecentSearch.visibility = View.VISIBLE
+                else {
+                    binding.noRecentSearch.visibility = View.GONE
+                    recentSearchAdapter.setList(it)
                 }
             }
 

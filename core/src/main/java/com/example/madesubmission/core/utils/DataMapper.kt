@@ -2,10 +2,12 @@ package com.example.madesubmission.core.utils
 
 import com.example.madesubmission.core.data.source.local.entity.GameDetailEntity
 import com.example.madesubmission.core.data.source.local.entity.GameEntity
+import com.example.madesubmission.core.data.source.local.entity.RecentSearchEntity
 import com.example.madesubmission.core.data.source.remote.response.GameDetailResponse
 import com.example.madesubmission.core.data.source.remote.response.GameResponse
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.model.GameDetail
+import com.example.madesubmission.core.domain.model.RecentSearch
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
@@ -93,6 +95,9 @@ object DataMapper {
         )
     }
 
+    fun entityToDomain(recentSearchEntity: RecentSearchEntity): RecentSearch =
+        RecentSearch(recentSearchEntity.query)
+
     fun domainToEntity(game: Game): GameEntity {
         return GameEntity(
             game.id,
@@ -105,4 +110,7 @@ object DataMapper {
             game.platformId
         )
     }
+
+    fun domainToEntity(recentSearch: RecentSearch): RecentSearchEntity =
+        RecentSearchEntity(recentSearch.query)
 }
