@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MADESubmission">
         <activity
+            android:name=".ui.setting.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ui.MainActivity"/>
+        <activity
             android:name=".ui.detail.DetailActivity"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/Theme.MADESubmission.NoActionBar">

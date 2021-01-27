@@ -41,6 +41,7 @@ class RecentSearchAdapter(private val listener: RecentSearchListener) :
             itemView.setOnLongClickListener {
                 val context = itemView.context
                 AlertDialog.Builder(context)
+                    .setTitle(recentSearch.query)
                     .setMessage(
                         String.format(
                             context.getString(R.string.delete_recent_search_confirmation),

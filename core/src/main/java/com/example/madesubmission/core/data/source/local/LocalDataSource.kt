@@ -20,5 +20,5 @@ class LocalDataSource(private val gameDao: GameDao) {
     fun getRecentSearch() = gameDao.getRecentSearch()
     suspend fun saveRecentSearch(recentSearchEntity: RecentSearchEntity) = gameDao.saveRecentSearch(recentSearchEntity)
     suspend fun deleteRecentSearch(recentSearchEntity: RecentSearchEntity) = gameDao.deleteRecentSearch(recentSearchEntity)
-    fun clearRecentSearch() = gameDao.clearRecentSearch()
+    suspend fun clearRecentSearch() = gameDao.clearRecentSearch()
 }

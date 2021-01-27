@@ -19,5 +19,5 @@ interface GameUseCase {
     fun getRecentSearch(): Flow<List<RecentSearch>>
     suspend fun saveRecentSearch(recentSearch: RecentSearch)
     suspend fun deleteRecentSearch(recentSearch: RecentSearch)
-    fun clearRecentSearch()
+    suspend fun clearRecentSearch()
 }

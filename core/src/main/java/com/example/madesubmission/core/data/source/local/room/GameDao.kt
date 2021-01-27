@@ -51,7 +51,7 @@ interface GameDao {
     suspend fun deleteRecentSearch(recentSearch: RecentSearchEntity)
 
     @Query("DELETE FROM recent_search")
-    fun clearRecentSearch()
+    suspend fun clearRecentSearch()
 
     suspend fun insertOrUpdate(gameEntities: List<GameEntity>) {
         for (gameEntity in gameEntities) {

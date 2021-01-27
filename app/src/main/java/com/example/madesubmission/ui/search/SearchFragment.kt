@@ -56,11 +56,9 @@ class SearchFragment : Fragment() {
             }
 
             searchViewModel.recentSearchLiveData.observe(viewLifecycleOwner) {
+                recentSearchAdapter.setList(it)
                 if (it.isEmpty()) binding.noRecentSearch.visibility = View.VISIBLE
-                else {
-                    binding.noRecentSearch.visibility = View.GONE
-                    recentSearchAdapter.setList(it)
-                }
+                else binding.noRecentSearch.visibility = View.GONE
             }
 
             binding.list.retryButton.setOnClickListener {

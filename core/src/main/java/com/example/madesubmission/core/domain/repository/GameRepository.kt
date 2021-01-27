@@ -127,5 +127,5 @@ class GameRepository(
     override suspend fun deleteRecentSearch(recentSearch: RecentSearch) =
         localDataSource.deleteRecentSearch(DataMapper.domainToEntity(recentSearch))
 
-    override fun clearRecentSearch() = localDataSource.clearRecentSearch()
+    override suspend fun clearRecentSearch() = localDataSource.clearRecentSearch()
 }

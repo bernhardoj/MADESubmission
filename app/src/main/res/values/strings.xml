@@ -23,4 +23,13 @@
     <string name="delete_recent_search_confirmation">Do you want to delete %1$s from search history?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="language_header">Languages</string>
+    <string name="history_header">History</string>
+
+    <string name="clear_search_history_title">Clear search history</string>
+    <string name="clear_history_confirmation">Are you sure to clear your search history?</string>
+    <string name="history_cleared">Search history is cleared!</string>
 </resources>
