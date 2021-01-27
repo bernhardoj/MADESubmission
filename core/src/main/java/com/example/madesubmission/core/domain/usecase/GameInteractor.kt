@@ -33,5 +33,8 @@ class GameInteractor(private val gameRepository: IGameRepository) : GameUseCase 
     override suspend fun saveRecentSearch(recentSearch: RecentSearch) =
         gameRepository.saveRecentSearch(recentSearch)
 
+    override suspend fun deleteRecentSearch(recentSearch: RecentSearch) =
+        gameRepository.deleteRecentSearch(recentSearch)
+
     override fun clearRecentSearch() = gameRepository.clearRecentSearch()
 }

@@ -4,7 +4,8 @@
     android:id="@+id/recent_query"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/big"
-    android:layout_marginVertical="@dimen/small"
+    android:paddingHorizontal="@dimen/big"
+    android:paddingVertical="@dimen/small"
+    android:background="?android:attr/selectableItemBackground"
     android:textColor="@color/black"
     tools:text="seal onl" />

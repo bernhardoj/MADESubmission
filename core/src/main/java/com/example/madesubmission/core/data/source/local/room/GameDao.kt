@@ -47,8 +47,11 @@ interface GameDao {
     @Query("SELECT * FROM recent_search")
     fun getRecentSearch(): Flow<List<RecentSearchEntity>>
 
+    @Delete
+    suspend fun deleteRecentSearch(recentSearch: RecentSearchEntity)
+
     @Query("DELETE FROM recent_search")
-    fun deleteRecentSearch()
+    fun clearRecentSearch()
 
     suspend fun insertOrUpdate(gameEntities: List<GameEntity>) {
         for (gameEntity in gameEntities) {

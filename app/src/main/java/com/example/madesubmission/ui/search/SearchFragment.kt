@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.madesubmission.R
+import com.example.madesubmission.core.domain.model.RecentSearch
 import com.example.madesubmission.core.ui.PagedGameAdapter
 import com.example.madesubmission.core.ui.paging.GameLoadStateAdapter
 import com.example.madesubmission.databinding.FragmentSearchBinding
@@ -101,9 +102,11 @@ class SearchFragment : Fragment() {
         }
 
         // Recent search adapter
-        recentSearchAdapter = RecentSearchAdapter {
-            binding.searchGame.setQuery(it, false)
-        }
+        recentSearchAdapter = RecentSearchAdapter(object : RecentSearchListener {
+            override fun onClick(query: String) = binding.searchGame.setQuery(query, false)
+            override fun onLongClick(recentSearch: RecentSearch) =
+                searchViewModel.deleteRecentSearch(recentSearch)
+        })
     }
 
     private fun initViewHolder(binding: FragmentSearchBinding) {

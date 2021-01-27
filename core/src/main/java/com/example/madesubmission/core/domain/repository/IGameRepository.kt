@@ -18,5 +18,6 @@ interface IGameRepository {
     suspend fun updateFavoriteGame(gameDetail: GameUpdateEntity)
     fun getRecentSearch(): Flow<List<RecentSearch>>
     suspend fun saveRecentSearch(recentSearch: RecentSearch)
+    suspend fun deleteRecentSearch(recentSearch: RecentSearch)
     fun clearRecentSearch()
 }

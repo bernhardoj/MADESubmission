@@ -67,4 +67,10 @@ class SearchViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
             gameUseCase.saveRecentSearch(RecentSearch(query))
         }
     }
+
+    fun deleteRecentSearch(recentSearch: RecentSearch) {
+        viewModelScope.launch {
+            gameUseCase.deleteRecentSearch(recentSearch)
+        }
+    }
 }
