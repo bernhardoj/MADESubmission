@@ -3,7 +3,6 @@ package com.example.madesubmission.ui.search
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madesubmission.R
 import com.example.madesubmission.core.domain.model.RecentSearch
@@ -34,7 +33,6 @@ class RecentSearchAdapter(private val listener: (String) -> Unit) : RecyclerView
             binding.recentQuery.text = recentSearch.query
             itemView.setOnClickListener {
                 listener.invoke(recentSearch.query)
-                Toast.makeText(itemView.context, "test", Toast.LENGTH_SHORT).show()
             }
         }
     }

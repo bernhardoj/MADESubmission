@@ -47,7 +47,7 @@ val networkModule = module {
 
 @ExperimentalPagingApi
 val repositoryModule = module {
-    single { RemoteDataSource(get()) }
+    single { RemoteDataSource(get(), get()) }
     single { LocalDataSource(get()) }
     single<IGameRepository> { GameRepository(get(), get()) }
 }

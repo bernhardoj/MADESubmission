@@ -9,7 +9,8 @@ import com.example.madesubmission.core.domain.model.RecentSearch
 import kotlinx.coroutines.flow.Flow
 
 interface GameUseCase {
-    fun getAllGames(query: String = "", platform: String = ""): Flow<Resource<List<Game>>>
+    fun getAllGames(platform: String): Flow<Resource<List<Game>>>
+    fun searchGames(query: String): Flow<PagingData<Game>>
     fun getGameDetail(id: Int): Flow<Resource<GameDetail>>
     fun getFavorites(): Flow<PagingData<Game>>
     suspend fun insertGame(game: Game)

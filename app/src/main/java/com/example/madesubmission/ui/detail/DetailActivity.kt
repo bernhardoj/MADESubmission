@@ -54,8 +54,8 @@ class DetailActivity : AppCompatActivity() {
 
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             when (abs(verticalOffset)) {
-                275 -> binding.toolbar.background = null
-                274 -> binding.toolbar.background =
+                in 275..420 -> binding.toolbar.background = null
+                else -> binding.toolbar.background =
                     ContextCompat.getDrawable(this, R.drawable.gradient_overlay)
             }
         })

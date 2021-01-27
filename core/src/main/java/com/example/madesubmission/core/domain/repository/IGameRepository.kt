@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IGameRepository {
     fun getAllGames(platform: String): Flow<Resource<List<Game>>>
-    fun searchGames(query: String): Flow<Resource<List<Game>>>
+    fun searchGames(query: String): Flow<PagingData<Game>>
     fun getGameDetail(id: Int): Flow<Resource<GameDetail>>
     fun getFavorites(): Flow<PagingData<Game>>
     suspend fun insertGame(game: Game)

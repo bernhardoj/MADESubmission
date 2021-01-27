@@ -1,7 +1,8 @@
 package com.example.madesubmission.ui.search
 
 import androidx.lifecycle.*
-import com.example.madesubmission.core.data.Resource
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.model.RecentSearch
 import com.example.madesubmission.core.domain.usecase.GameUseCase
@@ -15,29 +16,40 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class SearchViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
     val queryChannel = ConflatedBroadcastChannel<String>()
-    private var _gameLiveData = MutableLiveData<Resource<List<Game>>>()
+    private var _queryLiveData = MutableLiveData<String>()
     private var _recentSearchLiveData = MutableLiveData<List<RecentSearch>>()
     val recentSearchLiveData: LiveData<List<RecentSearch>>
         get() = _recentSearchLiveData
-    val gameLiveData: LiveData<Resource<List<Game>>>
-        get() = _gameLiveData
+    val queryLiveData: LiveData<String>
+        get() = _queryLiveData
+
+    private var currentQueryValue: String? = null
+    private var currentResult: Flow<PagingData<Game>>? = null
 
     init {
-        searchGames()
+        initQueryChannel()
         getRecentSearch()
     }
 
-    fun searchGames() {
+    fun searchGames(query: String): Flow<PagingData<Game>> {
+        val lastResult = currentResult
+        if (currentQueryValue == query && lastResult != null) {
+            return lastResult
+        }
+        currentQueryValue = query
+        val newResult: Flow<PagingData<Game>> = gameUseCase.searchGames(query).cachedIn(viewModelScope)
+        currentResult = newResult
+        return newResult
+    }
+
+    private fun initQueryChannel() {
         viewModelScope.launch {
             queryChannel.asFlow()
-                .debounce(500)
+                .debounce(300)
                 .distinctUntilChanged()
                 .filter { it.trim().isNotEmpty() }
-                .mapLatest { gameUseCase.getAllGames(query = it) }
                 .collect {
-                    it.collect { result ->
-                        _gameLiveData.postValue(result)
-                    }
+                    _queryLiveData.postValue(it)
                 }
         }
     }

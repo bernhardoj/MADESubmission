@@ -2,6 +2,7 @@ package com.example.madesubmission.core.domain.repository
 
 import androidx.paging.*
 import com.example.madesubmission.core.data.Resource
+import com.example.madesubmission.core.data.paging.GamesPagingSource
 import com.example.madesubmission.core.data.source.NetworkBoundResource
 import com.example.madesubmission.core.data.source.local.LocalDataSource
 import com.example.madesubmission.core.data.source.local.entity.GameUpdateEntity
@@ -33,7 +34,7 @@ class GameRepository(
             }
 
             override suspend fun createCall(): Flow<Resource<List<GameResponse>>> =
-                remoteDataSource.getAllGames(platform = platform)
+                remoteDataSource.getAllGames(platform)
 
             override suspend fun saveCallResult(data: List<GameResponse>) {
                 localDataSource.insertGames(DataMapper.responsesToEntities(data, platform))
@@ -46,21 +47,14 @@ class GameRepository(
             }
         }.asFlow()
 
-    override fun searchGames(query: String): Flow<Resource<List<Game>>> {
-        return flow {
-            emit(Resource.Loading())
-
-            when (val response = remoteDataSource.getAllGames(query).first()) {
-                is Resource.Success -> {
-                    val entities = DataMapper.responsesToEntities(response.data, "")
-                    val domain = DataMapper.entityToDomain(entities)
-                    emit(Resource.Success(domain))
-                }
-                is Resource.Error -> {
-                    emit(Resource.Error<List<Game>>(response.message))
-                }
-            }
-        }
+    override fun searchGames(query: String): Flow<PagingData<Game>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { GamesPagingSource(query, remoteDataSource) }
+        ).flow
     }
 
     override fun getGameDetail(id: Int): Flow<Resource<GameDetail>> =
