@@ -18,6 +18,7 @@ class LocalDataSource(private val gameDao: GameDao, private val recentSearchDao:
 
     suspend fun insertGame(gameEntity: GameEntity) = gameDao.insertGame(gameEntity)
     suspend fun insertGames(gameEntities: List<GameEntity>) = gameDao.insertOrUpdate(gameEntities)
+    suspend fun clearGames() = gameDao.clearGames()
     suspend fun insertGameDetail(gameDetailEntity: GameDetailEntity) =
         gameDao.insertGameDetail(gameDetailEntity)
 

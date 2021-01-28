@@ -59,6 +59,6 @@ interface GameDao {
         insertGames(gameEntities)
     }
 
-    @Query("DELETE FROM games WHERE platformId LIKE '%' || :platform || '%'")
-    suspend fun clearGames(platform: String)
+    @Query("DELETE FROM games")
+    suspend fun clearGames()
 }

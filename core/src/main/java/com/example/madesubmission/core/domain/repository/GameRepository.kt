@@ -37,6 +37,7 @@ class GameRepository(
                 remoteDataSource.getAllGames(platform)
 
             override suspend fun saveCallResult(data: List<GameResponse>) {
+                localDataSource.clearGames()
                 localDataSource.insertGames(DataMapper.responsesToEntities(data, platform))
             }
 
@@ -46,16 +47,6 @@ class GameRepository(
                 return GOOD
             }
         }.asFlow()
-
-    override fun searchGames(query: String): Flow<PagingData<Game>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { GamesPagingSource(query, remoteDataSource) }
-        ).flow
-    }
 
     override fun getGameDetail(id: Int): Flow<Resource<GameDetail>> =
         object : NetworkBoundResource<GameDetail, GameDetailResponse>() {
@@ -90,6 +81,16 @@ class GameRepository(
                 return GOOD
             }
         }.asFlow()
+
+    override fun searchGames(query: String): Flow<PagingData<Game>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { GamesPagingSource(query, remoteDataSource) }
+        ).flow
+    }
 
     override fun getFavorites(): Flow<PagingData<Game>> {
         return Pager(
