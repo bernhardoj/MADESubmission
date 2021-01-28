@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="game_image_desc">Game Image</string>
-    <string name="available_on">Available on</string>
     <string name="retry">Retry</string>
     <string name="network_error">Failed to connect. Please try again!</string>
 </resources>

@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.madesubmission.R
+import com.example.madesubmission.core.GlideApp
 import com.example.madesubmission.core.data.Resource
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.model.GameDetail
@@ -124,7 +124,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun updateView(gameDetail: GameDetail) {
-        Glide.with(this)
+        GlideApp.with(this)
             .load(game.imageUrl)
             .placeholder(ColorDrawable(Color.GRAY))
             .into(binding.gameImage)

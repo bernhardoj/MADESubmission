@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.madesubmission.core.GlideApp
 import com.example.madesubmission.core.databinding.ItemGameBinding
 import com.example.madesubmission.core.domain.model.Game
 
@@ -13,7 +13,7 @@ class GameViewHolder(itemView: View, private val listener: (Game) -> Unit) : Rec
 
     fun bind(game: Game) {
         with(binding) {
-            Glide.with(itemView.context)
+            GlideApp.with(itemView.context)
                 .load(game.imageUrl)
                 .placeholder(ColorDrawable(Color.DKGRAY))
                 .error(ColorDrawable(Color.BLACK))

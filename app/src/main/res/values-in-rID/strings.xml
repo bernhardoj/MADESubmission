@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_search">Pencarian</string>
+    <string name="menu_favorite">Favorit</string>
+    <string name="about">Tentang</string>
+    <string name="release_date">Tanggal rilis</string>
+    <string name="platforms">Platform</string>
+    <string name="developers">Pengembang</string>
+    <string name="publishers">Penerbit</string>
+    <string name="rating_heading">Peringkat</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="search_hint">Cari game</string>
+    <string name="no_games_found">Game tidak ditemukan. Silahkan menggunakan kata pencarian yang berbeda!</string>
+    <string name="recent_search">Pencarian terbaru</string>
+    <string name="no_recent_search">Kamu tidak memiliki pencarian terbaru!</string>
+    <string name="delete_recent_search_confirmation">Apakah kamu mau menghapus %1$s dari riwayat pencarian?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="language_header">Bahasa</string>
+    <string name="history_header">Riwayat</string>
+    <string name="clear_search_history_title">Hapus riwayat pencarian</string>
+    <string name="clear_history_confirmation">Apakah kamu yakin untuk menghapus riwayat pencarian?</string>
+    <string name="history_cleared">Riwayat pencarian terhapus!</string>
+    <string name="screenshots">Screenshot</string>
+    <string name="no_screenshots_available">Screenshot tidak tersedia!</string>
+    <string name="menu_explore">Jelajahi</string>
+</resources>

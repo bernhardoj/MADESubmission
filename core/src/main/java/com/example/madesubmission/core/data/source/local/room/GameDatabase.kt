@@ -9,4 +9,5 @@ import com.example.madesubmission.core.data.source.local.entity.RecentSearchEnti
 @Database(entities = [GameEntity::class, GameDetailEntity::class, RecentSearchEntity::class], version = 1, exportSchema = false)
 abstract class GameDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
+    abstract fun recentSearchDao(): RecentSearchDao
 }

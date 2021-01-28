@@ -5,7 +5,6 @@ import androidx.room.*
 import com.example.madesubmission.core.data.source.local.entity.GameDetailEntity
 import com.example.madesubmission.core.data.source.local.entity.GameEntity
 import com.example.madesubmission.core.data.source.local.entity.GameUpdateEntity
-import com.example.madesubmission.core.data.source.local.entity.RecentSearchEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -40,18 +39,6 @@ interface GameDao {
 
     @Query("SELECT * FROM games WHERE id=:id")
     fun getGame(id: Int): Flow<GameEntity>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun saveRecentSearch(recentSearch: RecentSearchEntity)
-
-    @Query("SELECT * FROM recent_search")
-    fun getRecentSearch(): Flow<List<RecentSearchEntity>>
-
-    @Delete
-    suspend fun deleteRecentSearch(recentSearch: RecentSearchEntity)
-
-    @Query("DELETE FROM recent_search")
-    suspend fun clearRecentSearch()
 
     suspend fun insertOrUpdate(gameEntities: List<GameEntity>) {
         for (gameEntity in gameEntities) {

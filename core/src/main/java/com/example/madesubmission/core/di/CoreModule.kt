@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit
 
 val databaseModule = module {
     factory { get<GameDatabase>().gameDao() }
+    factory { get<GameDatabase>().recentSearchDao() }
     single {
         Room.databaseBuilder(
             androidContext(),
@@ -48,6 +49,6 @@ val networkModule = module {
 @ExperimentalPagingApi
 val repositoryModule = module {
     single { RemoteDataSource(get(), get()) }
-    single { LocalDataSource(get()) }
+    single { LocalDataSource(get(), get()) }
     single<IGameRepository> { GameRepository(get(), get()) }
 }
