@@ -16,13 +16,13 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:textAlignment="center"
             android:id="@+id/game_title"
-            style="@style/TextAppearance.AppCompat.Display1"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/small"
-            android:padding="@dimen/big"
+            android:layout_marginHorizontal="@dimen/big"
+            android:layout_marginTop="@dimen/small"
+            android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,24 +32,18 @@
 
         <TextView
             android:id="@+id/about_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big"
+            style="@style/SectionHeading"
             android:text="@string/about"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_title" />
 
         <TextView
             android:id="@+id/game_desc"
-            style="@style/TextAppearance.AppCompat.Body1"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/big"
             android:layout_marginTop="@dimen/small"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/about_heading"
@@ -57,23 +51,18 @@
 
         <TextView
             android:id="@+id/release_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaHeading"
             android:layout_marginTop="@dimen/small"
             android:layout_marginEnd="@dimen/small"
             android:text="@string/release_date"
-            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/game_desc"
             app:layout_constraintTop_toBottomOf="@+id/game_desc" />
 
         <TextView
             android:id="@+id/game_released"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaInfo"
             android:layout_marginEnd="@dimen/small"
-            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/release_heading"
             app:layout_constraintTop_toBottomOf="@+id/release_heading"
@@ -81,43 +70,35 @@
 
         <TextView
             android:id="@+id/rating_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaHeading"
             android:layout_marginStart="@dimen/small"
             android:layout_marginTop="8dp"
             android:text="@string/rating_heading"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/game_desc"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/game_desc" />
 
         <TextView
             android:id="@+id/rating"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
+            style="@style/MetaInfo"
             app:layout_constraintStart_toStartOf="@+id/rating_heading"
             app:layout_constraintTop_toBottomOf="@+id/rating_heading"
             tools:text="5.0" />
 
         <TextView
             android:id="@+id/platform_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MetaHeading"
             android:layout_marginTop="@dimen/small"
+            android:layout_marginEnd="@dimen/small"
             android:text="@string/platforms"
-            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/release_heading"
             app:layout_constraintTop_toBottomOf="@+id/rating" />
 
         <TextView
             android:id="@+id/game_platforms"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaInfo"
             android:layout_marginEnd="@dimen/small"
-            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/platform_heading"
             app:layout_constraintTop_toBottomOf="@+id/platform_heading"
@@ -125,22 +106,17 @@
 
         <TextView
             android:id="@+id/genre_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaHeading"
             android:layout_marginStart="@dimen/small"
             android:layout_marginTop="@dimen/small"
             android:text="@string/genre"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/game_desc"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/rating" />
 
         <TextView
             android:id="@+id/game_genres"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
+            style="@style/MetaInfo"
             app:layout_constraintEnd_toEndOf="@+id/game_desc"
             app:layout_constraintStart_toStartOf="@+id/genre_heading"
             app:layout_constraintTop_toBottomOf="@+id/genre_heading"
@@ -155,23 +131,18 @@
 
         <TextView
             android:id="@+id/developer_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaHeading"
             android:layout_marginTop="@dimen/small"
             android:layout_marginEnd="@dimen/small"
             android:text="@string/developers"
-            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/platform_heading"
             app:layout_constraintTop_toBottomOf="@+id/barrier" />
 
         <TextView
             android:id="@+id/game_developers"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaInfo"
             android:layout_marginEnd="@dimen/small"
-            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/developer_heading"
             app:layout_constraintTop_toBottomOf="@+id/developer_heading"
@@ -179,21 +150,16 @@
 
         <TextView
             android:id="@+id/publisher_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/MetaHeading"
             android:layout_marginTop="@dimen/small"
             android:text="@string/publishers"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/game_desc"
             app:layout_constraintStart_toStartOf="@+id/genre_heading"
             app:layout_constraintTop_toBottomOf="@+id/barrier" />
 
         <TextView
             android:id="@+id/game_publishers"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
+            style="@style/MetaInfo"
             app:layout_constraintEnd_toEndOf="@+id/game_desc"
             app:layout_constraintStart_toStartOf="@+id/publisher_heading"
             app:layout_constraintTop_toBottomOf="@+id/publisher_heading"
@@ -215,14 +181,8 @@
 
         <TextView
             android:id="@+id/screenshot_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big"
-            android:layout_marginTop="@dimen/big"
+            style="@style/SectionHeading"
             android:text="@string/screenshots"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/barrier_2" />
 
@@ -232,6 +192,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/big"
             android:layout_marginBottom="@dimen/big"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -239,12 +200,8 @@
 
         <TextView
             android:id="@+id/no_screenshots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/big"
-            android:layout_marginBottom="@dimen/big"
+            style="@style/ErrorText"
             android:text="@string/no_screenshots_available"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

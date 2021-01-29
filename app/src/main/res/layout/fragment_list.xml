@@ -29,11 +29,7 @@
 
     <TextView
         android:id="@+id/error_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big"
-        android:textAlignment="center"
-        android:visibility="gone"
+        style="@style/ErrorText"
         app:layout_constraintBottom_toTopOf="@+id/retry_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

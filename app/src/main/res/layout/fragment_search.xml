@@ -18,11 +18,7 @@
 
     <TextView
         android:id="@+id/recent_search_heading"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/big"
-        android:layout_marginTop="@dimen/big"
+        style="@style/SectionHeading"
         android:text="@string/recent_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_game" />
@@ -32,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/small"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,8 +36,7 @@
 
     <TextView
         android:id="@+id/no_recent_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ErrorText"
         android:text="@string/no_recent_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,12 +44,12 @@
         app:layout_constraintTop_toBottomOf="@id/recent_search_heading" />
 
     <include
-        android:visibility="gone"
         android:id="@+id/list"
         layout="@layout/fragment_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/small"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_game" />
 </androidx.constraintlayout.widget.ConstraintLayout>

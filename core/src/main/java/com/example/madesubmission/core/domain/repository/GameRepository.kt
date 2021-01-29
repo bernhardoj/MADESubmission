@@ -37,7 +37,6 @@ class GameRepository(
                 remoteDataSource.getAllGames(platform)
 
             override suspend fun saveCallResult(data: List<GameResponse>) {
-                localDataSource.clearGames()
                 localDataSource.insertGames(DataMapper.responsesToEntities(data, platform))
             }
 
@@ -109,8 +108,8 @@ class GameRepository(
     override suspend fun insertGame(game: Game) =
         localDataSource.insertGame(DataMapper.domainToEntity(game))
 
-    override suspend fun deleteGame(game: Game) =
-        localDataSource.deleteGame(DataMapper.domainToEntity(game))
+    override suspend fun deleteGame(id: Int) =
+        localDataSource.deleteGame(id)
 
     override suspend fun updateFavoriteGame(gameDetail: GameUpdateEntity) =
         localDataSource.updateFavoriteGame(gameDetail)

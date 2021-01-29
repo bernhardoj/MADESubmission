@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/rating"
-            style="@style/TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corners"
@@ -61,9 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/big"
             android:layout_marginTop="@dimen/big"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="#FFFFFFFF"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/game_image"

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,8 +58,8 @@ class SearchFragment : Fragment() {
 
             searchViewModel.recentSearchLiveData.observe(viewLifecycleOwner) {
                 recentSearchAdapter.setList(it)
-                if (it.isEmpty()) binding.noRecentSearch.visibility = View.VISIBLE
-                else binding.noRecentSearch.visibility = View.GONE
+                binding.noRecentSearch.isVisible = it.isEmpty()
+                binding.recentRv.isVisible = it.isNotEmpty()
             }
 
             binding.list.retryButton.setOnClickListener {
@@ -74,30 +75,7 @@ class SearchFragment : Fragment() {
             intent.putExtra(DetailActivity.GAME_EXTRA, it)
             startActivity(intent)
         }
-
-        searchAdapter.addLoadStateListener { loadState ->
-            when (loadState.source.refresh) {
-                is LoadState.Loading -> {
-                    showRecentSearch(false)
-                    binding.list.progressBar.visibility = View.VISIBLE
-                    binding.list.retryButton.visibility = View.GONE
-                    binding.list.errorTv.visibility = View.GONE
-                }
-                is LoadState.NotLoading -> {
-                    binding.list.progressBar.visibility = View.GONE
-                    if (searchAdapter.itemCount == 0) binding.list.errorTv.text =
-                        context?.getString(R.string.no_games_found)
-                }
-                is LoadState.Error -> {
-                    binding.list.errorTv.apply {
-                        text = context.getString(R.string.network_error)
-                        visibility = View.VISIBLE
-                    }
-                    binding.list.progressBar.visibility = View.GONE
-                    binding.list.retryButton.visibility = View.VISIBLE
-                }
-            }
-        }
+        searchAdapter.addLoadStateListener(loadStateListener)
 
         // Recent search adapter
         recentSearchAdapter = RecentSearchAdapter(object : RecentSearchListener {
@@ -145,6 +123,7 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        searchAdapter.removeLoadStateListener(loadStateListener)
     }
 
     private val searchListener = object : SearchView.OnQueryTextListener {
@@ -158,6 +137,29 @@ class SearchFragment : Fragment() {
             if (newText.toString().isEmpty()) showRecentSearch(true)
 
             return true
+        }
+    }
+
+    private val loadStateListener = { loadState: CombinedLoadStates ->
+        with(loadState.source.refresh) {
+            binding?.let {
+                val error = this is LoadState.Error ||
+                        (searchViewModel.queryChannel.value.isNotEmpty()
+                                && this is LoadState.NotLoading
+                                && searchAdapter.itemCount == 0)
+                it.list.progressBar.isVisible = this is LoadState.Loading
+                it.list.retryButton.isVisible = this is LoadState.Error
+                it.list.errorTv.isVisible = error
+
+                if (error) {
+                    it.list.errorTv.text =
+                        context?.getString(
+                            if (this is LoadState.Error) R.string.network_error
+                            else R.string.no_games_found
+                        )
+                }
+            }
+            if (this is LoadState.Loading) showRecentSearch(false)
         }
     }
 }

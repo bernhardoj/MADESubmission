@@ -6,10 +6,12 @@ import com.example.madesubmission.core.data.source.local.entity.GameUpdateEntity
 import com.example.madesubmission.core.domain.model.Game
 import com.example.madesubmission.core.domain.model.GameDetail
 import com.example.madesubmission.core.domain.usecase.GameUseCase
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val id: Int, private val gameUseCase: GameUseCase) : ViewModel() {
+    private var job: Job? = null
     private val _gameDetailLiveData = MutableLiveData<Resource<GameDetail>>()
     private val _favoriteLiveData = MutableLiveData<Boolean>()
     val gameDetailLiveData: LiveData<Resource<GameDetail>>
@@ -34,11 +36,12 @@ class DetailViewModel(private val id: Int, private val gameUseCase: GameUseCase)
     }
 
     fun updateFavorite(isFavorite: Boolean, game: Game) {
-        viewModelScope.launch {
+        job?.cancel()
+        job = viewModelScope.launch {
             gameUseCase.updateFavoriteGame(GameUpdateEntity(id, isFavorite))
             when (isFavorite) {
                 true -> gameUseCase.insertGame(game)
-                false -> if (game.isFavorite) gameUseCase.deleteGame(game)
+                false -> gameUseCase.deleteGame(game.id)
             }
         }
     }

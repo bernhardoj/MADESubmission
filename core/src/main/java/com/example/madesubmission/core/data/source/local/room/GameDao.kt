@@ -34,8 +34,8 @@ interface GameDao {
     @Update(entity = GameDetailEntity::class)
     suspend fun updateFavoriteGame(gameDetail: GameUpdateEntity)
 
-    @Delete
-    suspend fun deleteGame(gameEntity: GameEntity)
+    @Query("DELETE FROM games WHERE id=:id AND isFavorite=1")
+    suspend fun deleteGame(id: Int)
 
     @Query("SELECT * FROM games WHERE id=:id")
     fun getGame(id: Int): Flow<GameEntity>
@@ -58,7 +58,4 @@ interface GameDao {
         }
         insertGames(gameEntities)
     }
-
-    @Query("DELETE FROM games")
-    suspend fun clearGames()
 }

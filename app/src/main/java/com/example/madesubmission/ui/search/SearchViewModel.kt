@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @ExperimentalCoroutinesApi
 class SearchViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
-    val queryChannel = ConflatedBroadcastChannel<String>()
+    val queryChannel = ConflatedBroadcastChannel("")
     private var _queryLiveData = MutableLiveData<String>()
     private var _recentSearchLiveData = MutableLiveData<List<RecentSearch>>()
     val recentSearchLiveData: LiveData<List<RecentSearch>>
@@ -62,10 +62,8 @@ class SearchViewModel(private val gameUseCase: GameUseCase) : ViewModel() {
         }
     }
 
-    fun saveRecentSearch(query: String) {
-        viewModelScope.launch {
-            gameUseCase.saveRecentSearch(RecentSearch(query))
-        }
+    suspend fun saveRecentSearch(query: String) {
+        gameUseCase.saveRecentSearch(RecentSearch(query))
     }
 
     fun deleteRecentSearch(recentSearch: RecentSearch) {

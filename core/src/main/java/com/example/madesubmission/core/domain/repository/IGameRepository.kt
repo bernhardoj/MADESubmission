@@ -14,7 +14,7 @@ interface IGameRepository {
     fun getGameDetail(id: Int): Flow<Resource<GameDetail>>
     fun getFavorites(): Flow<PagingData<Game>>
     suspend fun insertGame(game: Game)
-    suspend fun deleteGame(game: Game)
+    suspend fun deleteGame(id: Int)
     suspend fun updateFavoriteGame(gameDetail: GameUpdateEntity)
     fun getRecentSearch(): Flow<List<RecentSearch>>
     suspend fun saveRecentSearch(recentSearch: RecentSearch)

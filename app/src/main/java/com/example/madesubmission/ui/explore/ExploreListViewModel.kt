@@ -19,7 +19,7 @@ class ExploreListViewModel(private val platform: String, private val gameUseCase
 
     fun loadAllGames() {
         viewModelScope.launch {
-            gameUseCase.getAllGames(platform = platform).collect {
+            gameUseCase.getAllGames(platform).collect {
                 _gameLiveData.value = it
             }
         }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.madesubmission.core.data.Resource
 import com.example.madesubmission.core.ui.GameAdapter
@@ -23,6 +24,7 @@ class ExploreListFragment : Fragment() {
 
     private var binding: FragmentListBinding? = null
     private var platform: String? = null
+    private lateinit var gameAdapter: GameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,43 +46,33 @@ class ExploreListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { binding ->
-            val gameAdapter = GameAdapter {
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.GAME_EXTRA, it)
-                startActivity(intent)
-            }
+            initViewHolder(binding)
 
-            binding.rvGames.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = gameAdapter
-            }
+            exploreListViewModel.gameLiveData.observe(viewLifecycleOwner) { state ->
+                binding.progressBar.isVisible = state is Resource.Loading
+                binding.retryButton.isVisible = state is Resource.Error
+                binding.errorTv.isVisible = state is Resource.Error
 
-            exploreListViewModel.gameLiveData.observe(viewLifecycleOwner) { game ->
-                when (game) {
-                    is Resource.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.retryButton.visibility = View.GONE
-                        binding.errorTv.visibility = View.GONE
-                        gameAdapter.clearList()
-                    }
-                    is Resource.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        gameAdapter.setGameList(game.data)
-                    }
-                    is Resource.Error -> {
-                        binding.errorTv.apply {
-                            text = game.message
-                            visibility = View.VISIBLE
-                        }
-                        binding.progressBar.visibility = View.GONE
-                        binding.retryButton.visibility = View.VISIBLE
-                    }
-                }
+                if (state is Resource.Success) gameAdapter.setGameList(state.data)
+                if (state is Resource.Error) binding.errorTv.text = state.message
             }
 
             binding.retryButton.setOnClickListener {
                 exploreListViewModel.loadAllGames()
             }
+        }
+    }
+
+    private fun initViewHolder(binding: FragmentListBinding) {
+        gameAdapter = GameAdapter {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.GAME_EXTRA, it)
+            startActivity(intent)
+        }
+
+        binding.rvGames.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = gameAdapter
         }
     }
 

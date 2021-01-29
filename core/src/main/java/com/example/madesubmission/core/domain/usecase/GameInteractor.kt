@@ -22,7 +22,7 @@ class GameInteractor(private val gameRepository: IGameRepository) : GameUseCase 
     override fun getFavorites() = gameRepository.getFavorites()
     override suspend fun insertGame(game: Game) = gameRepository.insertGame(game)
 
-    override suspend fun deleteGame(game: Game) = gameRepository.deleteGame(game)
+    override suspend fun deleteGame(id: Int) = gameRepository.deleteGame(id)
 
     override suspend fun updateFavoriteGame(gameDetail: GameUpdateEntity) =
         gameRepository.updateFavoriteGame(gameDetail)

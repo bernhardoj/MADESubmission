@@ -1,6 +1,5 @@
 package com.example.madesubmission.core.data.paging
 
-import android.util.Log
 import androidx.paging.PagingSource
 import com.example.madesubmission.core.data.source.remote.RemoteDataSource
 import com.example.madesubmission.core.domain.model.Game
@@ -19,7 +18,6 @@ class GamesPagingSource(private val query: String, private val dataSource: Remot
             val domain = DataMapper.entityToDomain(entity)
 
             val nextKey = if (response.nextPage == null) null else page + 1
-            Log.d("TAG", "load: $nextKey")
 
             LoadResult.Page(
                 data = domain,

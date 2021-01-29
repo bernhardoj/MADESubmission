@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.madesubmission.R
 import com.example.madesubmission.core.GlideApp
@@ -27,7 +28,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var game: Game
-    private var gameDetail: GameDetail? = null
+    private lateinit var gameDetail: GameDetail
+    private lateinit var screenshotAdapter: ScreenshotAdapter
     private var favoriteMenuItem: MenuItem? = null
     private var isFavorite = false
     private val binding: ActivityDetailBinding by lazy {
@@ -52,43 +54,20 @@ class DetailActivity : AppCompatActivity() {
             )
         )
 
-        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-            when (abs(verticalOffset)) {
-                in 275..420 -> binding.toolbar.background = null
-                else -> binding.toolbar.background =
-                    ContextCompat.getDrawable(this, R.drawable.gradient_overlay)
-            }
-        })
+        binding.appBar.addOnOffsetChangedListener(offsetListener)
 
-        val screenshotAdapter = ScreenshotAdapter()
-        binding.content.screenshotRv.apply {
-            layoutManager =
-                LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL, false)
-            setHasFixedSize(true)
-            adapter = screenshotAdapter
-        }
+        initViewHolder()
 
-        detailViewModel.gameDetailLiveData.observe(this, { gameDetail ->
-            when (gameDetail) {
-                is Resource.Success -> {
-                    this.gameDetail = gameDetail.data
-                    if (gameDetail.data.screenshots.isEmpty()) binding.content.noScreenshots.visibility =
-                        View.VISIBLE
-                    else screenshotAdapter.setScreenshots(gameDetail.data.screenshots)
-                    binding.appBar.visibility = View.VISIBLE
-                    binding.content.contentLayout.visibility = View.VISIBLE
-                    binding.progressBar.visibility = View.GONE
-                    updateView(gameDetail.data)
-                }
-                is Resource.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.errorLayout.visibility = View.GONE
-                }
-                is Resource.Error -> {
-                    binding.errorLayout.visibility = View.VISIBLE
-                    binding.errorTv.text = gameDetail.message
-                    binding.progressBar.visibility = View.GONE
-                }
+        detailViewModel.gameDetailLiveData.observe(this, { state ->
+            binding.appBar.isVisible = state is Resource.Success
+            binding.content.contentLayout.isVisible = state is Resource.Success
+            binding.progressBar.isVisible = state is Resource.Loading
+            binding.errorLayout.isVisible = state is Resource.Error
+
+            if (state is Resource.Error) binding.errorTv.text = state.message
+            if (state is Resource.Success) {
+                gameDetail = state.data
+                updateView()
             }
         })
 
@@ -116,14 +95,25 @@ class DetailActivity : AppCompatActivity() {
                 true
             }
             R.id.action_favorite -> {
-                setFavorite()
+                detailViewModel.updateFavorite(!isFavorite, game)
                 true
             }
             else -> false
         }
     }
 
-    private fun updateView(gameDetail: GameDetail) {
+    private fun initViewHolder() {
+        screenshotAdapter = ScreenshotAdapter()
+        binding.content.screenshotRv.apply {
+            layoutManager =
+                LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = screenshotAdapter
+        }
+    }
+
+    private fun updateView() {
+        // About section
         GlideApp.with(this)
             .load(game.imageUrl)
             .placeholder(ColorDrawable(Color.GRAY))
@@ -140,6 +130,15 @@ class DetailActivity : AppCompatActivity() {
             gamePublishers.text = gameDetail.publishers
             rating.text = game.rating.toString()
         }
+
+        // Screenshot section
+        if (gameDetail.screenshots.isEmpty())
+            binding.content.noScreenshots.visibility = View.VISIBLE
+        else {
+            binding.content.screenshotRv.visibility = View.VISIBLE
+            screenshotAdapter.setScreenshots(gameDetail.screenshots)
+        }
+
         isFavorite = gameDetail.isFavorite
         detailViewModel.setFavorite(isFavorite)
     }
@@ -151,9 +150,11 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-    private fun setFavorite() {
-        gameDetail?.let {
-            detailViewModel.updateFavorite(!isFavorite, game)
+    private val offsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        when (abs(verticalOffset)) {
+            in 328..473 -> binding.toolbar.background = null
+            else -> binding.toolbar.background =
+                ContextCompat.getDrawable(this, R.drawable.gradient_overlay)
         }
     }
 }
