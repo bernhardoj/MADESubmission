@@ -13,6 +13,8 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.example.madesubmission.R
 import com.example.madesubmission.core.domain.model.RecentSearch
 import com.example.madesubmission.core.ui.PagedGameAdapter
@@ -33,6 +35,7 @@ class SearchFragment : Fragment() {
     private var binding: FragmentSearchBinding? = null
     private var job: Job? = null
     private var searchJob: Job? = null
+    private var isRecentSearchEmpty = true
     private lateinit var searchAdapter: PagedGameAdapter
     private lateinit var recentSearchAdapter: RecentSearchAdapter
 
@@ -58,8 +61,11 @@ class SearchFragment : Fragment() {
 
             searchViewModel.recentSearchLiveData.observe(viewLifecycleOwner) {
                 recentSearchAdapter.setList(it)
-                binding.noRecentSearch.isVisible = it.isEmpty()
-                binding.recentRv.isVisible = it.isNotEmpty()
+                isRecentSearchEmpty = it.isEmpty()
+                if (searchViewModel.queryChannel.value.isEmpty()) {
+                    binding.noRecentSearch.isVisible = isRecentSearchEmpty
+                    binding.recentRv.isVisible = !isRecentSearchEmpty
+                }
             }
 
             binding.list.retryButton.setOnClickListener {
@@ -114,7 +120,8 @@ class SearchFragment : Fragment() {
 
     private fun showRecentSearch(show: Boolean) {
         binding?.let {
-            it.recentRv.isVisible = show
+            it.recentRv.isVisible = !isRecentSearchEmpty && show
+            it.noRecentSearch.isVisible = isRecentSearchEmpty && show
             it.recentSearchHeading.isVisible = show
             it.list.listLayout.isVisible = !show
         }
@@ -142,6 +149,7 @@ class SearchFragment : Fragment() {
 
     private val loadStateListener = { loadState: CombinedLoadStates ->
         with(loadState.source.refresh) {
+            if (this is LoadState.Loading) showRecentSearch(false)
             binding?.let {
                 val error = this is LoadState.Error ||
                         (searchViewModel.queryChannel.value.isNotEmpty()
@@ -149,17 +157,24 @@ class SearchFragment : Fragment() {
                                 && searchAdapter.itemCount == 0)
                 it.list.progressBar.isVisible = this is LoadState.Loading
                 it.list.retryButton.isVisible = this is LoadState.Error
+                it.list.error.isVisible = error
                 it.list.errorTv.isVisible = error
 
                 if (error) {
-                    it.list.errorTv.text =
-                        context?.getString(
-                            if (this is LoadState.Error) R.string.network_error
-                            else R.string.no_games_found
-                        )
+                    var res = R.string.network_error
+                    var animation = R.raw.nointernet
+                    if (this !is LoadState.Error) {
+                        res = R.string.no_games_found
+                        animation = R.raw.searchnotfound
+                    }
+
+                    it.list.error.setAnimation(animation)
+                    it.list.error.playAnimation()
+                    it.list.errorTv.text = context?.getString(res)
                 }
             }
-            if (this is LoadState.Loading) showRecentSearch(false)
+
+            return@with
         }
     }
 }

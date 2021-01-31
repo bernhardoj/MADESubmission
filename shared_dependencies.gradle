@@ -22,4 +22,7 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
     testImplementation "androidx.paging:paging-common-ktx:$paging_version"
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.4.1'
 }

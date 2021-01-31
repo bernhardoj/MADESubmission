@@ -46,6 +46,7 @@ class FavoriteFragment : Fragment() {
             favoriteAdapter.addLoadStateListener { loadState ->
                 binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
                 binding.emptyTv.isVisible = loadState.source.refresh is LoadState.NotLoading && favoriteAdapter.itemCount == 0
+                binding.empty.isVisible = loadState.source.refresh is LoadState.NotLoading && favoriteAdapter.itemCount == 0
             }
 
             binding.rvFavorites.apply {

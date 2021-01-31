@@ -27,12 +27,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/error"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/error_tv"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_percent="0.5"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
     <TextView
         android:id="@+id/error_tv"
         style="@style/ErrorText"
         app:layout_constraintBottom_toTopOf="@+id/retry_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/error"
         tools:text="No internet connection!" />
 
     <Button
@@ -44,6 +60,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/error_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

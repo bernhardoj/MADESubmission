@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.madesubmission.R
 import com.example.madesubmission.core.data.Resource
 import com.example.madesubmission.core.ui.GameAdapter
 import com.example.madesubmission.databinding.FragmentListBinding
@@ -52,9 +53,14 @@ class ExploreListFragment : Fragment() {
                 binding.progressBar.isVisible = state is Resource.Loading
                 binding.retryButton.isVisible = state is Resource.Error
                 binding.errorTv.isVisible = state is Resource.Error
+                binding.error.isVisible = state is Resource.Error
 
                 if (state is Resource.Success) gameAdapter.setGameList(state.data)
-                if (state is Resource.Error) binding.errorTv.text = state.message
+                if (state is Resource.Error) {
+                    binding.errorTv.text = state.message
+                    binding.error.setAnimation(R.raw.nointernet)
+                    binding.error.playAnimation()
+                }
             }
 
             binding.retryButton.setOnClickListener {

@@ -35,10 +35,10 @@
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
-                android:background="@drawable/gradient_overlay"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/gradient_overlay"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/Theme.MADESubmission.PopupOverlay" />
 
@@ -63,25 +63,39 @@
         android:padding="@dimen/big"
         android:visibility="gone">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/error"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/error_tv"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintWidth_percent="0.5"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/nointernet" />
+
         <TextView
             android:id="@+id/error_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
+            style="@style/ErrorText"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/retry_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/error"
+            tools:text="No internet connection!" />
 
         <Button
             android:id="@+id/retry_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/retry"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/error_tv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
