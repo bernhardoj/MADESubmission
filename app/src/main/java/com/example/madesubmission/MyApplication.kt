@@ -15,6 +15,7 @@ import org.koin.core.context.startKoin
 @FlowPreview
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
+@Suppress("unused")
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()

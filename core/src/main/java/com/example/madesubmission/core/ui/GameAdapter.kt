@@ -15,11 +15,6 @@ class GameAdapter(private val listener: (Game) -> Unit) : RecyclerView.Adapter<G
         notifyDataSetChanged()
     }
 
-    fun clearList() {
-        gameList.clear()
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
         GameViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_game, parent, false),

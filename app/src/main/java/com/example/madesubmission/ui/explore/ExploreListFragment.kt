@@ -51,6 +51,7 @@ class ExploreListFragment : Fragment() {
 
             exploreListViewModel.gameLiveData.observe(viewLifecycleOwner) { state ->
                 binding.progressBar.isVisible = state is Resource.Loading
+                binding.rvGames.isVisible = state is Resource.Success
                 binding.retryButton.isVisible = state is Resource.Error
                 binding.errorTv.isVisible = state is Resource.Error
                 binding.error.isVisible = state is Resource.Error

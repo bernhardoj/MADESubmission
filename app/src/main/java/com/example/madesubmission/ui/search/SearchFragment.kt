@@ -13,14 +13,13 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import com.example.madesubmission.R
 import com.example.madesubmission.core.domain.model.RecentSearch
 import com.example.madesubmission.core.ui.PagedGameAdapter
 import com.example.madesubmission.core.ui.paging.GameLoadStateAdapter
 import com.example.madesubmission.databinding.FragmentSearchBinding
 import com.example.madesubmission.ui.detail.DetailActivity
+import com.example.madesubmission.util.KeyboardUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -52,6 +51,10 @@ class SearchFragment : Fragment() {
         binding?.let { binding ->
             initAdapter(binding)
             initViewHolder(binding)
+
+            binding.searchGame.setOnQueryTextFocusChangeListener { view, b ->
+                if (!b) KeyboardUtil.hideKeyboard(view)
+            }
 
             binding.searchGame.setOnQueryTextListener(searchListener)
 
@@ -151,12 +154,14 @@ class SearchFragment : Fragment() {
         with(loadState.source.refresh) {
             if (this is LoadState.Loading) showRecentSearch(false)
             binding?.let {
-                val error = this is LoadState.Error ||
-                        (searchViewModel.queryChannel.value.isNotEmpty()
-                                && this is LoadState.NotLoading
-                                && searchAdapter.itemCount == 0)
+                val empty = searchViewModel.queryChannel.value.isNotEmpty()
+                        && this is LoadState.NotLoading
+                        && searchAdapter.itemCount == 0
+                val error = this is LoadState.Error || empty
+
                 it.list.progressBar.isVisible = this is LoadState.Loading
                 it.list.retryButton.isVisible = this is LoadState.Error
+                it.list.rvGames.isVisible = this is LoadState.NotLoading && searchAdapter.itemCount != 0
                 it.list.error.isVisible = error
                 it.list.errorTv.isVisible = error
 
