@@ -3,6 +3,7 @@ package com.example.madesubmission.ui.detail
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -150,9 +151,13 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-    private val offsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+    private val offsetListener = AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        val range = ((appBarLayout.totalScrollRange*0.69344).toInt())..appBarLayout.totalScrollRange
         when (abs(verticalOffset)) {
-            in 328..473 -> binding.toolbar.background = null
+            in range -> {
+                Log.d("TAG", "$verticalOffset")
+                binding.toolbar.background = null
+            }
             else -> binding.toolbar.background =
                 ContextCompat.getDrawable(this, R.drawable.gradient_overlay)
         }

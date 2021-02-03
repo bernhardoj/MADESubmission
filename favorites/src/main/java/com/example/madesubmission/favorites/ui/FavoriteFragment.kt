@@ -18,10 +18,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
 
 class FavoriteFragment : Fragment() {
     private val favoriteViewModel: FavoriteViewModel by viewModel()
     private var binding: FragmentFavoriteBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        loadKoinModules(viewModelModule)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +35,6 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
-        loadKoinModules(viewModelModule)
         return binding?.root
     }
 
@@ -63,8 +68,9 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unloadKoinModules(viewModelModule)
         binding = null
     }
 }

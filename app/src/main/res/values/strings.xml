@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">MADESubmission</string>
 
+    <string name="title_favorite" translatable="false">Favorite</string>
+
     <string name="menu_explore">Explore</string>
     <string name="menu_search">Search</string>
     <string name="menu_favorite">Favorite</string>

@@ -12,6 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class ExploreFragment : Fragment() {
     private var binding: FragmentExploreBinding? = null
+    private var mediator: TabLayoutMediator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,15 +31,19 @@ class ExploreFragment : Fragment() {
                 viewPager.adapter = ViewPagerAdapter(it)
 
                 val tabLayout = bind.tabLayout
-                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                mediator = TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                     tab.text = (viewPager.adapter as ViewPagerAdapter).fragmentsName[position]
-                }.attach()
+                }
+                mediator?.attach()
             }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mediator?.detach()
+        mediator = null
+        binding?.pager?.adapter = null
         binding = null
     }
 }
