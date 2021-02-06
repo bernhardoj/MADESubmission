@@ -14,8 +14,12 @@ class GamesPagingSource(private val query: String, private val dataSource: Remot
             val page = params.key ?: START_INDEX
 
             val response = dataSource.searchGames(query, page)
-            val entity = DataMapper.responsesToEntities(response.games, "")
-            val domain = DataMapper.entityToDomain(entity)
+            val entity = response.games.map {
+                DataMapper.responsesToEntity(it, "")
+            }
+            val domain = entity.map {
+                DataMapper.entityToDomain(it)
+            }
 
             val nextKey = if (response.nextPage == null) null else page + 1
 

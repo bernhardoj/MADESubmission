@@ -24,7 +24,9 @@ class GameRepository(
         object : NetworkBoundResource<List<Game>, List<GameResponse>>() {
             override fun loadFromDb(): Flow<List<Game>> {
                 return localDataSource.getAllGames(platform).map {
-                    DataMapper.entityToDomain(it)
+                    it.map { entity ->
+                        DataMapper.entityToDomain(entity)
+                    }
                 }
             }
 
@@ -37,7 +39,9 @@ class GameRepository(
                 remoteDataSource.getAllGames(platform)
 
             override suspend fun saveCallResult(data: List<GameResponse>) {
-                localDataSource.insertGames(DataMapper.responsesToEntities(data, platform))
+                localDataSource.insertGames(data.map {
+                    DataMapper.responsesToEntity(it, platform)
+                })
             }
 
             override fun isExpired(data: List<Game>): Int {
@@ -67,7 +71,7 @@ class GameRepository(
             override suspend fun saveCallResult(data: GameDetailResponse) {
                 val dbSource = loadFromDb().first()
                 localDataSource.insertGameDetail(
-                    DataMapper.responsesToEntities(
+                    DataMapper.responsesToEntity(
                         data,
                         dbSource.isFavorite
                     )

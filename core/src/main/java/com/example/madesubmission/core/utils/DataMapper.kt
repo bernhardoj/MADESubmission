@@ -14,24 +14,22 @@ import com.google.gson.reflect.TypeToken
 object DataMapper {
     private const val UNKNOWN = "N/A"
 
-    fun responsesToEntities(responses: List<GameResponse>, platformId: String): List<GameEntity> =
-        responses.map {
-            GameEntity(
-                it.id,
-                it.name,
-                it.imageUrl,
-                it.rating,
-                if (it.genres == null || it.genres.isEmpty()) UNKNOWN
-                else it.genres.joinToString(", ") { genre ->
-                    genre.name
-                },
-                DayUtil.getCurrentDay(),
-                false,
-                platformId
-            )
-        }
+    fun responsesToEntity(response: GameResponse, platformId: String): GameEntity =
+        GameEntity(
+            response.id,
+            response.name,
+            response.imageUrl,
+            response.rating,
+            if (response.genres == null || response.genres.isEmpty()) UNKNOWN
+            else response.genres.joinToString(", ") { genre ->
+                genre.name
+            },
+            DayUtil.getCurrentDay(),
+            false,
+            platformId
+        )
 
-    fun responsesToEntities(response: GameDetailResponse, isFavorite: Boolean): GameDetailEntity =
+    fun responsesToEntity(response: GameDetailResponse, isFavorite: Boolean): GameDetailEntity =
         GameDetailEntity(
             response.id,
             response.description,
@@ -53,19 +51,6 @@ object DataMapper {
             isFavorite
         )
 
-    fun entityToDomain(gameEntities: List<GameEntity>): List<Game> = gameEntities.map {
-        Game(
-            it.id,
-            it.name,
-            it.imageUrl,
-            it.rating,
-            it.genres,
-            it.updated,
-            it.isFavorite,
-            it.platformId
-        )
-    }
-
     fun entityToDomain(gameEntity: GameEntity): Game = Game(
         gameEntity.id,
         gameEntity.name,
@@ -77,21 +62,21 @@ object DataMapper {
         gameEntity.platformId
     )
 
-    fun entityToDomain(gameDetailEntities: GameDetailEntity?): GameDetail {
+    fun entityToDomain(gameDetailEntity: GameDetailEntity?): GameDetail {
         val gson = GsonBuilder().create()
         return GameDetail(
-            gameDetailEntities?.id ?: -1,
-            gameDetailEntities?.description ?: UNKNOWN,
-            gameDetailEntities?.releaseDate ?: UNKNOWN,
-            gameDetailEntities?.platforms ?: UNKNOWN,
-            gameDetailEntities?.developers ?: UNKNOWN,
-            gameDetailEntities?.publishers ?: UNKNOWN,
-            gameDetailEntities?.updated ?: 0,
+            gameDetailEntity?.id ?: -1,
+            gameDetailEntity?.description ?: UNKNOWN,
+            gameDetailEntity?.releaseDate ?: UNKNOWN,
+            gameDetailEntity?.platforms ?: UNKNOWN,
+            gameDetailEntity?.developers ?: UNKNOWN,
+            gameDetailEntity?.publishers ?: UNKNOWN,
+            gameDetailEntity?.updated ?: 0,
             gson.fromJson(
-                gameDetailEntities?.screenshots,
+                gameDetailEntity?.screenshots,
                 object : TypeToken<List<String>>() {}.type
             ) ?: listOf(),
-            gameDetailEntities?.isFavorite ?: false
+            gameDetailEntity?.isFavorite ?: false
         )
     }
 
