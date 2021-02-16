@@ -12,7 +12,6 @@ import com.google.gson.GsonBuilder
 
 import org.junit.Test
 class DataMapperTest {
-
     @Test
     fun testResponsesToEntityNoNull() {
         val response = GameResponse(

@@ -1,12 +1,15 @@
 package com.example.madesubmission.core.data.source.remote
 
 import android.content.Context
+import androidx.paging.PagingSource
 import com.example.madesubmission.core.BuildConfig
 import com.example.madesubmission.core.R
 import com.example.madesubmission.core.data.Resource
+import com.example.madesubmission.core.data.paging.GamesPagingSource
 import com.example.madesubmission.core.data.source.remote.network.ApiService
 import com.example.madesubmission.core.data.source.remote.response.GameDetailResponse
 import com.example.madesubmission.core.data.source.remote.response.GameResponse
+import com.example.madesubmission.core.domain.model.Game
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,7 +24,7 @@ class RemoteDataSource(private val apiService: ApiService, private val context: 
         }
     }.flowOn(Dispatchers.IO)
 
-    suspend fun searchGames(query: String, page: Int) = apiService.searchGames(BuildConfig.API_KEY, page, query)
+    fun searchGames(query: String): PagingSource<Int, Game> = GamesPagingSource(query, apiService)
 
     suspend fun getGameDetail(id: Int): Flow<Resource<GameDetailResponse>> = flow {
         try {

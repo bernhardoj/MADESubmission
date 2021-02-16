@@ -2,7 +2,6 @@ package com.example.madesubmission.core.domain.repository
 
 import androidx.paging.*
 import com.example.madesubmission.core.data.Resource
-import com.example.madesubmission.core.data.paging.GamesPagingSource
 import com.example.madesubmission.core.data.source.NetworkBoundResource
 import com.example.madesubmission.core.data.source.local.LocalDataSource
 import com.example.madesubmission.core.data.source.local.entity.GameUpdateEntity
@@ -91,7 +90,7 @@ class GameRepository(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { GamesPagingSource(query, remoteDataSource) }
+            pagingSourceFactory = { remoteDataSource.searchGames(query) }
         ).flow
     }
 

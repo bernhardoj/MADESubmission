@@ -26,7 +26,7 @@ class DetailViewModel(private val id: Int, private val gameUseCase: GameUseCase)
     fun loadDetail() {
         viewModelScope.launch {
             gameUseCase.getGameDetail(id).collect {
-                _gameDetailLiveData.value = it
+                _gameDetailLiveData.postValue(it)
             }
         }
     }
